@@ -53,3 +53,4 @@ const figuras: Figura[] = [
 figuras.forEach(figura => {
     console.log(figura.area)
 })
+
