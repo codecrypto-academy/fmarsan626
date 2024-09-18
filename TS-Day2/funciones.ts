@@ -75,26 +75,41 @@ const ju1: TeamPlayer = ["Paco", 28, "Delantero"]
 //console.log(ju1)
 
 //Clases
-
+type ColorType = "rojo" | "azul" | "verde"
 class Triangulo {
-    base: number
-    altura: number
-    constructor(base: number, altura: number) {
-        this.base = base
-        this.altura = altura
+    static createTria(base: number, altura: number) {
+        return new Triangulo(base, altura)
     }
 
-    area() {
-        return (this.base * this.altura) / 2
+    #base: number
+    #altura: number
+    #color: ColorType
+    private constructor(base: number, altura: number) {
+        this.#base = base
+        this.#altura = altura
+        this.#color = "verde"
     }
+
+    get area() {
+        return (this.#base * this.#altura) / 2
+    }
+    get color() {
+        return this.#color
+    }
+    set color(valor:ColorType) {
+        this.#color = valor
+    }
+
 }
 
-const tr1 = new Triangulo(10, 20)
-const tr2 = new Triangulo(30, 40)
-console.log(tr1.area())
-console.log(tr2.area())
+// const tr1 = new Triangulo(10, 2, "rojo")
+// const tr2 = new Triangulo(30, 40, "azul")
 
-const arrTriangulos = [tr1, tr2]
-const total = arrTriangulos.reduce((acc, item) => acc + item.area(), 0)
+const tr1 = Triangulo.createTria(40, 42)
+console.log(tr1.area)
+//console.log(tr2.area)
 
-console.log("total", total)
+//const arrTriangulos = [tr1, tr2]
+//const total = arrTriangulos.reduce((acc, item) => acc + item.area, 0)
+
+//console.log("total", total)
