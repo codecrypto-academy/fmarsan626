@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import { Pool, ClientConfig } from "pg"
 
 type CustomerType = {
     customer_id: string,
@@ -13,16 +13,32 @@ type CustomerType = {
     phone: string,
     fax: string
 }
-
-
-const pool = new Pool({
+const clientConfig: ClientConfig = {
     user: 'postgres',
     host: 'localhost',
     password: 'pwd',
-});
+}
+const pool = new Pool(clientConfig)
 
-pool.query("select * from customers limit 2", (err: any, res: any) => {
-    console.log(err, res.rows);
-    pool.end();
+async function main() {
+    try {
+        const res = await pool.query<CustomerType>('SELECT * FROM customers limit 4', [])
+        res.rows.forEach(row => {
+            console.log(row.city, row.country, row.company_name)
+
+        })
+
+    } catch (error) {
+        throw "Error en funcion"
+    }
+
+    //console.log( res.rows)
+}
+
+main().then(() => {
+    console.log('Done')
+}).catch((err) => {
+    console.error('Error de main', err)
+}).finally(() => {
+    pool.end()
 })
-// 
