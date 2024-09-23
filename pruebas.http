@@ -1,0 +1,16 @@
+get http://localhost:3344
+
+###
+post http://localhost:3344/addUser
+
+###
+post http://localhost:3344/echoPost
+Content-Type: application/x-www-form-urlencoded
+
+campo1=v1&fecha=14/4/424
+
+###
+post http://localhost:3344/echoPostJson
+Content-Type: application/json
+
+campo1=v1&fecha=14/4/24
