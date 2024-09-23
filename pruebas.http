@@ -13,4 +13,16 @@ campo1=v1&fecha=14/4/424
 post http://localhost:3344/echoPostJson
 Content-Type: application/json
 
-campo1=v1&fecha=14/4/24
+{"cmpo":"1"}
+
+###
+post http://localhost:3344/echoPost?a=1&a=2&a=3
+Content-Type: application/x-www-form-urlencoded
+
+a=1&a=2&a=3&person[name]=jose&person[age]=45
+
+###
+post http://localhost:3344/echoParamPost/222/facturas/555
+Content-Type: application/x-www-form-urlencoded
+
+a=1&a=2&a=3&person[name]=jose&person[age]=45
