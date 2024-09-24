@@ -23,5 +23,5 @@ app.post("/echoPostJson",(req,res)=>{
 })
 app.post("/addUser", (req, res)=>{
     res.send("Añadido").status(200)
-})
+}) 
 app.listen(3344)
