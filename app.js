@@ -2,9 +2,13 @@ const express = require("express")
 const app = express()
 
 app.use(express.json())
+app.use(express.static("public", {
+
+    index:"myindex.html"
+}))
 app.use(express.urlencoded({extended:true}))
 
-app.get("/", (req, res)=>{
+app.get("/hi", (req, res)=>{
     res.send("hi")
 })
 
@@ -24,4 +28,5 @@ app.post("/echoPostJson",(req,res)=>{
 app.post("/addUser", (req, res)=>{
     res.send("Añadido").status(200)
 }) 
-app.listen(3344)
+app.listen(3344) 
+//
