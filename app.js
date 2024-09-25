@@ -1,7 +1,26 @@
 const express = require("express")
 const app = express()
 const filesUpload = require("express-fileupload")
+const morgan = require("morgan")
+const fs = require("fs")
+const { Pool } = require('pg')
 
+
+const pool = new Pool({
+    localhost: "localhost",
+    port: 5432,
+    user: "postgres",
+    password: "pwd"
+})
+
+
+const logOutput = fs.createWriteStream("uploads/logs.txt", {
+    flags: 'a'
+})
+app.use(morgan('combined', {
+    skip: function (req, res) { res.statusCode < 400 },
+    stream: logOutput
+}))
 app.use(express.json())
 app.use(express.static("public", {
 
@@ -56,6 +75,67 @@ app.post("/uploadFicheros", async (req, res) => {
     }
 })
 
+
+app.get("/bdd/test", async (req, res) => {
+    try {
+        const respuesta = await pool.query("select now() fecha");
+        res.send(respuesta.rows)
+
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+
+})
+
+
+app.get("/bdd/customers", async (req, res) => {
+    try {
+        const respuesta = await pool.query("select * from customers");
+        res.send(respuesta.rows)
+
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+
+})
+
+app.get("/bdd/customers/:id", async (req, res) => {
+    try {
+        const respuesta = await pool.query("select * from customers where customer_id =$1", [req.params.id]);
+        res.send(respuesta.rows[0])
+
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+
+})
+
+app.get("/bdd/orders/:cliente", async (req, res) => {
+    try {
+        const respuesta = await pool.query("select * from orders where customer_id =$1", [req.params.cliente]);
+        res.send(respuesta.rows)
+
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+
+})
+
+app.get("/bdd/orders/:cliente/:id", async (req, res) => {
+    try {
+        const respuesta = await pool.query("select * from orders where customer_id = $1 and order_id = $2", [req.params.cliente, req.params.id]);
+
+        if (respuesta.rows.length == 0) {
+            res.status(404).send("no existe")
+        } else {
+            res.send(respuesta.rows[0])
+        }
+
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+
+})
 
 app.listen(3344)
 
