@@ -4,8 +4,11 @@ const filesUpload = require("express-fileupload")
 const morgan = require("morgan")
 const fs = require("fs")
 const { Pool } = require('pg')
+const { Web3 } = require('web3');
 
 
+const WEB3_PROVIDER = "https://sepolia.infura.io/v3/2b2915d7965f4adab8302a82a5b760f5"
+const web3 = new Web3(WEB3_PROVIDER)
 const pool = new Pool({
     localhost: "localhost",
     port: 5432,
@@ -131,6 +134,31 @@ app.get("/bdd/orders/:cliente/:id", async (req, res) => {
             res.send(respuesta.rows[0])
         }
 
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+
+})
+
+
+app.get("/web3/balance/:address", async (req, res) => {
+    try {
+        const address = req.params.address;
+
+        const balance = await web3.eth.getBalance(address)
+        res.send(balance.toString())
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+
+})
+app.get("/web3/getblock/:numero", async (req, res) => {
+    try {
+        const numero = req.params.numero;
+
+        const block = await web3.eth.getBlock(numero)
+        console.log(block)
+        res.send(block.rows)
     } catch (err) {
         res.status(500).send({ err })
     }
