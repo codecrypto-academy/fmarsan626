@@ -29,3 +29,12 @@ a=1&a=2&a=3&person[name]=jose&person[age]=45
 
 ###
 get http://localhost:3344/p1.html
+
+###
+post http://localhost:3344/minio/createBucket
+Content-Type: application/json
+
+{"nombre":"curso"}
+
+###
+delete http://localhost:3344/minio/curso/42-EXPRESS-POST-BODY.pdf

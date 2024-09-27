@@ -5,6 +5,19 @@ const morgan = require("morgan")
 const fs = require("fs")
 const { Pool } = require('pg')
 const { Web3 } = require('web3');
+const Minio = require("minio")
+app.set("view engine", "pug")
+const {clientes} = require("./clientes")
+const {productos} = require("./productos")
+
+
+const minioClient = new Minio.Client({
+    endPoint: 'localhost',
+    port: 9000,
+    accessKey: "admin",
+    secretKey: "password",
+    useSSL: false
+})
 
 
 const WEB3_PROVIDER = "https://sepolia.infura.io/v3/2b2915d7965f4adab8302a82a5b760f5"
@@ -16,6 +29,8 @@ const pool = new Pool({
     password: "pwd"
 })
 
+app.use("/cli", clientes)
+app.use("/pro", productos)
 
 const logOutput = fs.createWriteStream("uploads/logs.txt", {
     flags: 'a'
@@ -30,7 +45,8 @@ app.use(express.static("public", {
     index: "myindex.html"
 }))
 app.use(filesUpload({
-    limits: { fileSize: 50 * 1024 * 1024 }
+    createParentPath: true,
+    limits: { fileSize: 5 * 1024 * 1024 * 1024 }
 }))
 
 app.use(express.urlencoded({ extended: true }))
@@ -165,6 +181,81 @@ app.get("/web3/getblock/:numero", async (req, res) => {
 
 })
 
-app.listen(3344)
 
-//
+app.post("/minio/createBucket", async (req, res) => {
+    try {
+        await minioClient.makeBucket(req.body.nombre, 'use-east-1')
+        res.send({ resultado: "ok" }).status(200)
+    } catch (error) {
+        res.send({ error }).status(500)
+    }
+
+})
+
+app.post("/minio/addFile", async (req, res) => {
+    const bucket = req.body.bucket
+    //console.log(bucket)
+    //console.log('Contenido de req.body:', req.body);
+    //console.log('Archivos recibidos:', req.files);
+    if (!req.files || !req.files.fichero) {
+        return res.status(400).send({ error: "No se encontró el archivo 'fichero'" });
+    }
+    const file = req.files.fichero
+    //console.log(file.name)
+
+    try {
+        await minioClient.putObject(
+            bucket,
+            file.name,
+            file.data
+        )
+        res.send({ resultado: "ok" }).status(200)
+    } catch (error) {
+        res.send({ error }).status(500)
+    }
+
+})
+
+app.get("/minio/:bucket/:fichero", async (req, res) => {
+    try {
+        const dataStream = await minioClient.getObject(req.params.bucket, req.params.fichero)
+        dataStream.pipe(res)
+
+    } catch (error) {
+        res.send({ error }).status(500)
+    }
+
+
+})
+
+app.delete("/minio/:bucket/:fichero", async (req, res) => {
+    try {
+        await minioClient.removeObjects(req.params.bucket, [req.params.fichero])
+        res.status(200).send({ resultado: "Borrado" })
+
+    } catch (error) {
+        res.status(500).send({ error })
+
+    }
+})
+
+app.get("/template1", function (req, res) {
+    res.render("t1.pug", { title: "curso2022", message: "hola a pug" })
+})
+
+app.get("/",(req, res)=>{
+
+})
+
+app.get("/error", (req, res) => {
+    throw new Error("Esto falla")
+})
+
+app.get("*", (req, res) => {
+    res.status(404).send("No encontrado 404")
+})
+
+app.use((error, req, res, next) => {
+    res.status(500).send(error.message)
+})
+app.listen(3344)
