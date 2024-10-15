@@ -1,13 +1,23 @@
 import express from 'express';
 import { Request, Response } from 'express';
-
+import cors from 'cors';
 const app = express();
+app.use(express.json());
+app.use(cors());
+
 const port = 3333;
 
-app.get('/', (req: Request, res: Response)=>{
+app.get('/:p1/:p2', (req: Request, res: Response) => {
+    const { p1, p2 } = req.params;
+    res.send(
+        {p1:p1, p2:p2}
+    );
+});
+app.post('/', (req: Request, res: Response) => {
+    const body = req.body
     res.send('Hello World');
 });
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`server en el puerto ${port}`);
 })
