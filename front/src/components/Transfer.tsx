@@ -1,11 +1,16 @@
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
+import { ethers } from "ethers";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { Loader, Loader2 } from "lucide-react";
 
 
 
 export function Transfer() {
+    const [tx, setTx] = useState<object | null>(null);
+    const [loading, setLoading] = useState(false);
     const form = useForm({
         defaultValues: {
             from: "0xC31d5ECdc839e1cd8A8489D8D78335a07Ad82425",
@@ -14,8 +19,17 @@ export function Transfer() {
         }
     });
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const onSubmit = async (data: any) => {
+        setLoading(true);
+        const provider = new ethers.BrowserProvider(window.ethereum)
+        const signer = await provider.getSigner(data.from)
+        const t = await signer.sendTransaction({
+            to: data.to,
+            value: ethers.parseEther(data.amount.toString())
+        })
+        const tx = await t.wait()
+        setTx(tx);
+        setLoading(false)
     };
 
     return <div className="space-y-4 mt-4">
@@ -77,10 +91,17 @@ export function Transfer() {
 
 
 
-                <Button type="submit">Transfer</Button>
+                <Button type="submit">
+                    <Loader2 size={16} className={loading ? "animate-spin" : "hidden"} />
+                    Transfer</Button>
             </form>
         </Form>
-
+        {tx && (
+            <div>
+                <h2>Transacción realizada</h2>
+                <pre>{JSON.stringify(tx, null, 4)}</pre>
+            </div>
+        )}
 
     </div>
 }
