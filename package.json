@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "mysql8": "^2.17.3"
+    "mssql": "^11.0.1",
+    "mysql8": "^2.17.3",
+    "sqlserver": "^0.0.2-security"
   }
 }
