@@ -1,0 +1,7 @@
+Public address of the key:   0x2F1Cd86502991cBbaA1De72Dd14a39E423Fe6322
+Path of the secret key file: /data/keystore/UTC--2024-10-20T17-36-43.863510043Z--2f1cd86502991cbbaa1de72dd14a39e423fe6322
+
+
+docker run -v ./pwd.txt:/p.txt -v ./datos:/data ethereum/client-go:v1.13.15 account new --datadir /data --password /p.txt
+
+docker run --rm -v ./pwd.txt:/p.txt -v ./datos:/data -p 5556:8545 ethereum/client-go:v1.13.15 --datadir /data --unlock 2f1cd86502991cbbaa1de72dd14a39e423fe6322 --allow-insecure-unlock --mine --miner.etherbase 2f1cd86502991cbbaa1de72dd14a39e423fe6322 --password /p.txt --nodiscover --http --http.addr "0.0.0.0" --http.api "admin,eth.debug,miner,net,txpool,personal,web3,eth" --http.corsdomain "*"
