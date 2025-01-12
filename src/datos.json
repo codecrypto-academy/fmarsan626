@@ -1,0 +1,89 @@
+{
+    "header": {
+        "nombre": "MyCompany",
+        "links": [
+            {
+                "texto": "blog",
+                "url": "http://google.com"
+            },
+            {
+                "texto": "Yotube",
+                "url": "http://youtube.com"
+            }
+        ]
+    },
+    "precios": [
+        {
+            "titulo": "free",
+            "precio": "$0",
+            "por": "month",
+            "textButton": "Sign up for free",
+            "features": [
+                "feature 1",
+                "feature 2",
+                "feature 3",
+                "feature 4"
+            ]
+        },
+        {
+            "titulo": "Pro",
+            "precio": "$10",
+            "por": "month",
+            "textButton": "Sign up for free",
+            "features": [
+                "feature 1",
+                "feature 2",
+                "feature 3",
+                "feature 4"
+            ]
+        },
+        {
+            "titulo": "Enterprise",
+            "precio": "$100",
+            "por": "month",
+            "textButton": "Sign up for free",
+            "features": [
+                "feature 1",
+                "feature 2",
+                "feature 3",
+                "feature 4"
+            ]
+        }
+    ],
+    "footer": [
+        {
+            "titulo": "Social",
+            "links": [
+                {
+                    "titulo": "youtube",
+                    "url": "http://youtube.com"
+                },
+                {
+                    "titulo": "X",
+                    "url": "http://x.com"
+                },
+                {
+                    "titulo": "Instagram",
+                    "url": "http://nstagram.com"
+                }
+            ]
+        },
+        {
+            "titulo": "Help",
+            "links": [
+                {
+                    "titulo": "Ayuda",
+                    "url": "http://youtube.com"
+                },
+                {
+                    "titulo": "FAQ",
+                    "url": "http://x.com"
+                },
+                {
+                    "titulo": "Contacto",
+                    "url": "http://nstagram.com"
+                }
+            ]
+        }
+    ]
+}
