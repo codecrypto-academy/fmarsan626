@@ -1,0 +1,30 @@
+=============== Jan 24, 2025 (CET) ===============
+11:29:08.916637 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:29:08.936056 db@open opening
+11:29:08.937327 version@stat F·[] S·0B[] Sc·[]
+11:29:08.943776 db@janitor F·2 G·0
+11:29:08.943807 db@open done T·7.727146ms
+11:35:22.952725 db@close closing
+11:35:22.952816 db@close done T·87.062µs
+=============== Jan 24, 2025 (CET) ===============
+11:38:24.751994 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:38:24.752077 version@stat F·[] S·0B[] Sc·[]
+11:38:24.752110 db@open opening
+11:38:24.752129 journal@recovery F·1
+11:38:24.752814 journal@recovery recovering @1
+11:38:24.760318 memdb@flush created L0@2 N·2 S·181B "loc..seq,v2":"version,v1"
+11:38:24.760623 version@stat F·[1] S·181B[181B] Sc·[0.25]
+11:38:24.788988 db@janitor F·3 G·0
+11:38:24.789032 db@open done T·36.917264ms
+11:47:28.085278 db@close closing
+11:47:28.085332 db@close done T·53.35µs
+=============== Jan 24, 2025 (CET) ===============
+11:52:58.733760 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:52:58.733930 version@stat F·[1] S·181B[181B] Sc·[0.25]
+11:52:58.733966 db@open opening
+11:52:58.733988 journal@recovery F·1
+11:52:58.734605 journal@recovery recovering @3
+11:52:58.742024 memdb@flush created L0@5 N·1 S·162B "loc..seq,v4":"loc..seq,v4"
+11:52:58.742334 version@stat F·[2] S·343B[343B] Sc·[0.50]
+11:52:58.770181 db@janitor F·4 G·0
+11:52:58.770218 db@open done T·36.246688ms
