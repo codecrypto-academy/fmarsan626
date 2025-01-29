@@ -1,7 +1,7 @@
 const { Web3 } = require("Web3")
 
 const web3 = new Web3("http://localhost:8545")
-const walletAddress = '<<wallet Metamask 1>>';
+const walletAddress = '0x613aaDB6D66bC91159fb07Faf6A6ABD95b3255E7';
 
 async function getUltimoBloque(){
     const bloque = await web3.eth.getBlockNumber();
@@ -17,8 +17,8 @@ async function getBalance(){
 
 
 var tx = {
-    from: "<<wallet Metamask 1>>",
-    to :"<<wallet Node 1>>",
+    from: "0x613aaDB6D66bC91159fb07Faf6A6ABD95b3255E7",
+    to :"0x87c30F82cFdb74dA33A6F6db4f37471b333650fa",
     value: 120000000,
     // web3.utils.toWei(100000000, "ether"),
     gasPrice: 1,
