@@ -1,0 +1,4 @@
+node_modules
+postgres-data
+minio-data
+ficheros_subidos
